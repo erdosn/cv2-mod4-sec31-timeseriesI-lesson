@@ -3,15 +3,10 @@
 
 ### Objectives
 YWBAT 
-- apply time series techniques to find insights on a dataset
+- apply pacf and acf on our data
 
 ### Outline
 data found [here](https://data.world/data-society/global-climate-change-data/workspace/file?filename=GlobalLandTemperatures%2FGlobalTemperatures.csv)
-
-- Take Questions
-- Load in Data
-- (20 min) Students will discuss data, transform it, condition it and find trends
-- (25 min) Class will discuss any insights found
 
 
 ```python
@@ -19,6 +14,8 @@ import pandas as pd
 import numpy as np
 
 import matplotlib.pyplot as plt
+from pandas.plotting import autocorrelation_plot
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 ```
 
 
@@ -319,7 +316,7 @@ plt.show()
 ```
 
 
-![png](lesson-plan_files/lesson-plan_10_0.png)
+![png](lesson-plan-II_files/lesson-plan-II_10_0.png)
 
 
 
@@ -442,7 +439,7 @@ plt.show()
 ```
 
 
-![png](lesson-plan_files/lesson-plan_12_0.png)
+![png](lesson-plan-II_files/lesson-plan-II_12_0.png)
 
 
 ### Okay, let's try and find some kind of correlation here
@@ -598,7 +595,7 @@ plt.show()
 ```
 
 
-![png](lesson-plan_files/lesson-plan_17_0.png)
+![png](lesson-plan-II_files/lesson-plan-II_17_0.png)
 
 
 
@@ -633,220 +630,18 @@ df_annual_mean.plot(figsize = (22,8), style = 'b.')
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x1c2f7f0e48>
+    <matplotlib.axes._subplots.AxesSubplot at 0x121066a90>
 
 
 
 
-![png](lesson-plan_files/lesson-plan_20_1.png)
-
-
-
-```python
-for yr, group in year_temps:
-    print(yr)
-    print(group)
-    break
-```
-
-    1970-12-31 00:00:00
-                LandAverageTemperature  LandAverageTemperatureUncertainty  \
-    dt                                                                      
-    1970-01-01                   2.836                              0.084   
-    1970-02-01                   3.735                              0.082   
-    1970-03-01                   5.272                              0.114   
-    1970-04-01                   8.603                              0.066   
-    1970-05-01                  11.206                              0.099   
-    1970-06-01                  13.513                              0.086   
-    1970-07-01                  14.395                              0.100   
-    1970-08-01                  13.658                              0.062   
-    1970-09-01                  12.277                              0.063   
-    1970-10-01                   9.348                              0.042   
-    1970-11-01                   6.047                              0.059   
-    1970-12-01                   3.521                              0.050   
-    
-                LandMaxTemperature  LandMaxTemperatureUncertainty  \
-    dt                                                              
-    1970-01-01               8.288                          0.117   
-    1970-02-01               9.543                          0.108   
-    1970-03-01              11.066                          0.180   
-    1970-04-01              14.383                          0.179   
-    1970-05-01              17.165                          0.121   
-    1970-06-01              19.368                          0.203   
-    1970-07-01              20.254                          0.114   
-    1970-08-01              19.430                          0.179   
-    1970-09-01              17.879                          0.089   
-    1970-10-01              14.960                          0.089   
-    1970-11-01              11.562                          0.109   
-    1970-12-01               8.941                          0.094   
-    
-                LandMinTemperature  LandMinTemperatureUncertainty  \
-    dt                                                              
-    1970-01-01              -2.584                          0.099   
-    1970-02-01              -2.020                          0.127   
-    1970-03-01              -0.545                          0.211   
-    1970-04-01               2.739                          0.113   
-    1970-05-01               5.402                          0.107   
-    1970-06-01               7.599                          0.189   
-    1970-07-01               8.723                          0.099   
-    1970-08-01               8.097                          0.122   
-    1970-09-01               6.620                          0.124   
-    1970-10-01               3.787                          0.103   
-    1970-11-01               0.524                          0.082   
-    1970-12-01              -1.829                          0.084   
-    
-                LandAndOceanAverageTemperature  \
-    dt                                           
-    1970-01-01                          13.711   
-    1970-02-01                          14.022   
-    1970-03-01                          14.503   
-    1970-04-01                          15.440   
-    1970-05-01                          16.104   
-    1970-06-01                          16.672   
-    1970-07-01                          16.912   
-    1970-08-01                          16.748   
-    1970-09-01                          16.335   
-    1970-10-01                          15.420   
-    1970-11-01                          14.418   
-    1970-12-01                          13.707   
-    
-                LandAndOceanAverageTemperatureUncertainty  
-    dt                                                     
-    1970-01-01                                      0.052  
-    1970-02-01                                      0.053  
-    1970-03-01                                      0.058  
-    1970-04-01                                      0.051  
-    1970-05-01                                      0.055  
-    1970-06-01                                      0.056  
-    1970-07-01                                      0.058  
-    1970-08-01                                      0.052  
-    1970-09-01                                      0.055  
-    1970-10-01                                      0.051  
-    1970-11-01                                      0.050  
-    1970-12-01                                      0.048  
+![png](lesson-plan-II_files/lesson-plan-II_20_1.png)
 
 
 
 ```python
 year_matrix.head()
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>10</th>
-      <th>11</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1970-12-31</th>
-      <td>13.711</td>
-      <td>14.022</td>
-      <td>14.503</td>
-      <td>15.440</td>
-      <td>16.104</td>
-      <td>16.672</td>
-      <td>16.912</td>
-      <td>16.748</td>
-      <td>16.335</td>
-      <td>15.420</td>
-      <td>14.418</td>
-      <td>13.707</td>
-    </tr>
-    <tr>
-      <th>1971-12-31</th>
-      <td>13.615</td>
-      <td>13.627</td>
-      <td>14.254</td>
-      <td>15.227</td>
-      <td>15.963</td>
-      <td>16.539</td>
-      <td>16.846</td>
-      <td>16.752</td>
-      <td>16.220</td>
-      <td>15.298</td>
-      <td>14.399</td>
-      <td>13.660</td>
-    </tr>
-    <tr>
-      <th>1972-12-31</th>
-      <td>13.298</td>
-      <td>13.644</td>
-      <td>14.446</td>
-      <td>15.291</td>
-      <td>16.095</td>
-      <td>16.729</td>
-      <td>16.956</td>
-      <td>16.978</td>
-      <td>16.270</td>
-      <td>15.438</td>
-      <td>14.419</td>
-      <td>13.951</td>
-    </tr>
-    <tr>
-      <th>1973-12-31</th>
-      <td>13.774</td>
-      <td>14.140</td>
-      <td>14.663</td>
-      <td>15.528</td>
-      <td>16.288</td>
-      <td>16.795</td>
-      <td>17.002</td>
-      <td>16.889</td>
-      <td>16.267</td>
-      <td>15.419</td>
-      <td>14.381</td>
-      <td>13.711</td>
-    </tr>
-    <tr>
-      <th>1974-12-31</th>
-      <td>13.300</td>
-      <td>13.490</td>
-      <td>14.267</td>
-      <td>15.182</td>
-      <td>15.957</td>
-      <td>16.616</td>
-      <td>16.846</td>
-      <td>16.912</td>
-      <td>16.197</td>
-      <td>15.274</td>
-      <td>14.320</td>
-      <td>13.656</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 
 ```python
@@ -870,25 +665,11 @@ drop_cols = [col for col in df2.columns if 'Uncertainty' in col]
 df2.drop(drop_cols, axis=1, inplace=True)
 ```
 
-    /anaconda3/lib/python3.7/site-packages/pandas/core/frame.py:3940: SettingWithCopyWarning: 
-    A value is trying to be set on a copy of a slice from a DataFrame
-    
-    See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
-      errors=errors)
-
-
 
 ```python
 #What do we notice about the heatmap
 # summer is more hot than winter
 ```
-
-
-
-
-    (12, 46)
-
-
 
 
 ```python
@@ -898,48 +679,6 @@ for column in df2.columns:
     print("\n\n")
 ```
 
-    LandAverageTemperature
-
-
-
-![png](lesson-plan_files/lesson-plan_26_1.png)
-
-
-    
-    
-    
-    LandMaxTemperature
-
-
-
-![png](lesson-plan_files/lesson-plan_26_3.png)
-
-
-    
-    
-    
-    LandMinTemperature
-
-
-
-![png](lesson-plan_files/lesson-plan_26_5.png)
-
-
-    
-    
-    
-    LandAndOceanAverageTemperature
-
-
-
-![png](lesson-plan_files/lesson-plan_26_7.png)
-
-
-    
-    
-    
-
-
 
 ```python
 for column in df.drop(drop_cols, axis=1).columns:
@@ -948,74 +687,1098 @@ for column in df.drop(drop_cols, axis=1).columns:
     print("\n\n")
 ```
 
-    LandAverageTemperature
-
-
-
-![png](lesson-plan_files/lesson-plan_27_1.png)
-
-
-    
-    
-    
-    LandMaxTemperature
-
-
-
-![png](lesson-plan_files/lesson-plan_27_3.png)
-
-
-    
-    
-    
-    LandMinTemperature
-
-
-
-![png](lesson-plan_files/lesson-plan_27_5.png)
-
-
-    
-    
-    
-    LandAndOceanAverageTemperature
-
-
-
-![png](lesson-plan_files/lesson-plan_27_7.png)
-
-
-    
-    
-    
-
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
 ### Assessment
 - Climate change is real
 - Learned to utilize the heatmap to spot trends, Spectral_r
 - Workflow: putting things together from lessons
+
+### Beginning PACF and ACF
+
+### What is the purpose of PACF and ACF?
+- ACF:  
+    * Compare the correlation between 2 dates as described by the lag time
+    * Telling us how much the later data depends on earlier data
+
+
+```python
+df.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LandAverageTemperature</th>
+      <th>LandAverageTemperatureUncertainty</th>
+      <th>LandMaxTemperature</th>
+      <th>LandMaxTemperatureUncertainty</th>
+      <th>LandMinTemperature</th>
+      <th>LandMinTemperatureUncertainty</th>
+      <th>LandAndOceanAverageTemperature</th>
+      <th>LandAndOceanAverageTemperatureUncertainty</th>
+    </tr>
+    <tr>
+      <th>dt</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1750-01-01</th>
+      <td>3.034</td>
+      <td>3.574</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1750-02-01</th>
+      <td>3.083</td>
+      <td>3.702</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1750-03-01</th>
+      <td>5.626</td>
+      <td>3.076</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1750-04-01</th>
+      <td>8.490</td>
+      <td>2.451</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1750-05-01</th>
+      <td>11.573</td>
+      <td>2.072</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+### ACF and PACF of DATA
+
+
+```python
+fig, ax = plt.subplots(figsize=(12,5))
+plot_acf(df2['LandAndOceanAverageTemperature'],ax=ax, lags=50)
+plt.grid()
+```
+
+
+![png](lesson-plan-II_files/lesson-plan-II_32_0.png)
+
+
+
+```python
+fig, ax = plt.subplots(figsize=(12,5))
+plot_pacf(df2['LandAndOceanAverageTemperature'],ax=ax, lags=50)
+plt.grid()
+```
+
+
+![png](lesson-plan-II_files/lesson-plan-II_33_0.png)
+
+
+
+```python
+df2.ix[48, :]
+```
+
+    /anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:1: DeprecationWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+    
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/indexing.html#ix-indexer-is-deprecated
+      """Entry point for launching an IPython kernel.
+
+
+
+
+
+    LandAverageTemperature                        2.261
+    LandAverageTemperatureUncertainty             0.096
+    LandMaxTemperature                            7.464
+    LandMaxTemperatureUncertainty                 0.109
+    LandMinTemperature                           -2.894
+    LandMinTemperatureUncertainty                 0.096
+    LandAndOceanAverageTemperature               13.300
+    LandAndOceanAverageTemperatureUncertainty     0.052
+    Name: 1974-01-01 00:00:00, dtype: float64
+
+
+
+### Let's look at differences now of 1 and 12
+
+
+```python
+df2_diff12 = df2.diff(periods=12)
+df2_diff1 = df2.diff(periods=1)
+df2.head(2)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LandAverageTemperature</th>
+      <th>LandAverageTemperatureUncertainty</th>
+      <th>LandMaxTemperature</th>
+      <th>LandMaxTemperatureUncertainty</th>
+      <th>LandMinTemperature</th>
+      <th>LandMinTemperatureUncertainty</th>
+      <th>LandAndOceanAverageTemperature</th>
+      <th>LandAndOceanAverageTemperatureUncertainty</th>
+    </tr>
+    <tr>
+      <th>dt</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1970-01-01</th>
+      <td>2.836</td>
+      <td>0.084</td>
+      <td>8.288</td>
+      <td>0.117</td>
+      <td>-2.584</td>
+      <td>0.099</td>
+      <td>13.711</td>
+      <td>0.052</td>
+    </tr>
+    <tr>
+      <th>1970-02-01</th>
+      <td>3.735</td>
+      <td>0.082</td>
+      <td>9.543</td>
+      <td>0.108</td>
+      <td>-2.020</td>
+      <td>0.127</td>
+      <td>14.022</td>
+      <td>0.053</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+fig, ax = plt.subplots(figsize=(12,5))
+plot_acf(df2_diff1['LandAndOceanAverageTemperature'].dropna(),ax=ax, lags=50)
+plt.grid()
+```
+
+
+![png](lesson-plan-II_files/lesson-plan-II_37_0.png)
+
+
+
+```python
+fig, ax = plt.subplots(figsize=(12, 5))
+plot_pacf(df_diff1['LandAndOceanAverageTemperature'].dropna(),ax=ax, lags=100);
+plt.grid()
+```
+
+
+![png](lesson-plan-II_files/lesson-plan-II_38_0.png)
+
+
+$$ ARMA = F_1(y_{t-i}) + F_2(\epsilon_i) $$
+
+
+```python
+fig, ax = plt.subplots(figsize=(12,5))
+plot_acf(df_diff12['LandAndOceanAverageTemperature'].dropna(),ax=ax, lags=50)
+plt.grid()
+```
+
+
+![png](lesson-plan-II_files/lesson-plan-II_40_0.png)
+
+
+
+```python
+fig, ax = plt.subplots(figsize=(12, 5))
+plot_pacf(df_diff12['LandAndOceanAverageTemperature'].dropna(),ax=ax, lags=50)
+plt.grid()
+```
+
+
+![png](lesson-plan-II_files/lesson-plan-II_41_0.png)
+
+
+### Let's look at diffs of ...
+
+
+```python
+for i in range(30, 100):
+    print(i)
+    df2_diff = df2.diff(periods=i)
+
+
+    fig, ax = plt.subplots(figsize=(12,5))
+    plot_acf(df2_diff['LandAndOceanAverageTemperature'].dropna(),ax=ax, lags=50)
+    plt.grid()
+    plt.show()
+
+    fig, ax = plt.subplots(figsize=(12, 5))
+    plot_pacf(df2_diff['LandAndOceanAverageTemperature'].dropna(),ax=ax, lags=50)
+    plt.grid()
+    plt.show()
+```
+
+    30
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_1.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_2.png)
+
+
+    31
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_4.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_5.png)
+
+
+    32
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_7.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_8.png)
+
+
+    33
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_10.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_11.png)
+
+
+    34
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_13.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_14.png)
+
+
+    35
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_16.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_17.png)
+
+
+    36
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_19.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_20.png)
+
+
+    37
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_22.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_23.png)
+
+
+    38
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_25.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_26.png)
+
+
+    39
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_28.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_29.png)
+
+
+    40
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_31.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_32.png)
+
+
+    41
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_34.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_35.png)
+
+
+    42
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_37.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_38.png)
+
+
+    43
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_40.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_41.png)
+
+
+    44
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_43.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_44.png)
+
+
+    45
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_46.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_47.png)
+
+
+    46
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_49.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_50.png)
+
+
+    47
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_52.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_53.png)
+
+
+    48
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_55.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_56.png)
+
+
+    49
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_58.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_59.png)
+
+
+    50
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_61.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_62.png)
+
+
+    51
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_64.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_65.png)
+
+
+    52
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_67.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_68.png)
+
+
+    53
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_70.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_71.png)
+
+
+    54
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_73.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_74.png)
+
+
+    55
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_76.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_77.png)
+
+
+    56
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_79.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_80.png)
+
+
+    57
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_82.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_83.png)
+
+
+    58
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_85.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_86.png)
+
+
+    59
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_88.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_89.png)
+
+
+    60
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_91.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_92.png)
+
+
+    61
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_94.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_95.png)
+
+
+    62
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_97.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_98.png)
+
+
+    63
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_100.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_101.png)
+
+
+    64
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_103.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_104.png)
+
+
+    65
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_106.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_107.png)
+
+
+    66
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_109.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_110.png)
+
+
+    67
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_112.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_113.png)
+
+
+    68
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_115.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_116.png)
+
+
+    69
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_118.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_119.png)
+
+
+    70
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_121.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_122.png)
+
+
+    71
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_124.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_125.png)
+
+
+    72
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_127.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_128.png)
+
+
+    73
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_130.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_131.png)
+
+
+    74
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_133.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_134.png)
+
+
+    75
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_136.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_137.png)
+
+
+    76
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_139.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_140.png)
+
+
+    77
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_142.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_143.png)
+
+
+    78
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_145.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_146.png)
+
+
+    79
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_148.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_149.png)
+
+
+    80
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_151.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_152.png)
+
+
+    81
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_154.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_155.png)
+
+
+    82
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_157.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_158.png)
+
+
+    83
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_160.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_161.png)
+
+
+    84
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_163.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_164.png)
+
+
+    85
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_166.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_167.png)
+
+
+    86
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_169.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_170.png)
+
+
+    87
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_172.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_173.png)
+
+
+    88
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_175.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_176.png)
+
+
+    89
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_178.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_179.png)
+
+
+    90
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_181.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_182.png)
+
+
+    91
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_184.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_185.png)
+
+
+    92
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_187.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_188.png)
+
+
+    93
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_190.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_191.png)
+
+
+    94
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_193.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_194.png)
+
+
+    95
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_196.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_197.png)
+
+
+    96
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_199.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_200.png)
+
+
+    97
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_202.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_203.png)
+
+
+    98
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_205.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_206.png)
+
+
+    99
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_208.png)
+
+
+
+![png](lesson-plan-II_files/lesson-plan-II_43_209.png)
+
+
+
+```python
+
+```
